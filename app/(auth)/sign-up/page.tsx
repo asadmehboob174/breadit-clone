@@ -1,4 +1,5 @@
 import SignIn from '@/components/SignIn'
+import SignUp from '@/components/SignUp'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ChevronLeft } from 'lucide-react'
@@ -18,7 +19,7 @@ const page: FC<pageProps> = ({}) => {
          </Link>
         </div>
          <div className='pt-20'>
-           <SignIn />
+           <SignUp />
          </div>
      </div>
   </div>

@@ -36,7 +36,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({className, ...props}) => {
 
   return (
     <div className={cn('flex justify-center', className)} {...props}>
-      <Button onClick={loginWithGoogle} isloading={isloading} size='default' className='w-full'>
+      <Button onClick={loginWithGoogle} isloading={isloading} size='sm' className='w-full'>
         {isloading ? null : <Icons.google className='h-4 w-4 mr-2' />}
         Google
       </Button> 

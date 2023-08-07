@@ -1,17 +1,27 @@
+
 import Link from 'next/link'
 import { FC } from 'react'
 import { Icons } from './Icon'
 import { buttonVariants } from './ui/button'
+import { getAuthSession } from '@/lib/auth'
+import { signOut } from 'next-auth/react'
+import Image from 'next/image'
+import UserAccountNav from './UserAccountNav'
 
 interface NavbarProps {
 }
 
 const Navbar: FC<NavbarProps> = async ({}) => {
+
+   const session = await getAuthSession();
+
   return <div className='
               fixed top-0 inset-x-0
               h-fit               
               bg-zinc-100 
               border-b border-zinc-300
+              shadow-sm
+               shadow-zinc-200
               z-[10]
               py-3
               '>
@@ -37,8 +47,16 @@ const Navbar: FC<NavbarProps> = async ({}) => {
                     </Link>
 
                     {/* search bar */}
-
-                    <Link href={"/sign-in"} className={buttonVariants()}>Sign In</Link>
+                    {
+                      session?.user?.name ? (
+                        <div className='translate-y-1'>
+                          <UserAccountNav user={session?.user} />
+                        </div>
+                      ) :
+                      (
+                         <Link href={"/sign-in"} className={buttonVariants()}>Sign In</Link>
+                      )
+                    }
                     
                 </div>
               </div>
