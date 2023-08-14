@@ -12,6 +12,7 @@ interface pageProps {
   }
 }
 
+
 const page: FC<pageProps> = async ({params}) => {
   const {slug} = params;
 
