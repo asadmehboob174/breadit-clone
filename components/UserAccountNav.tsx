@@ -43,7 +43,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({user}) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-            <Link href="/settings" className='hover:bg-zinc-100 cursor-pointer'>Settings</Link>
+            <Link href="/" className='hover:bg-zinc-100 cursor-pointer'>Settings</Link>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
