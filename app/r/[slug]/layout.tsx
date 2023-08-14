@@ -1,16 +1,19 @@
+import SubscribeLeaveToggle from "@/components/SubscribeLeaveToggle";
+import { buttonVariants } from "@/components/ui/button";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import { getAuthSession } from "@/lib/auth"
 import { db } from "@/lib/db";
 import { format } from "date-fns";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const Layout = async ({children, params : {slug}}: {children : React.ReactNode, params : {slug : string}}) => {
 
   const session = await getAuthSession();
 
-  if(!session?.user) {
-    return notFound();
-  }
+  // if(!session?.user) {
+  //   return notFound();
+  // }
 
   const subreddit = await db.subreddit.findFirst({
     where : { name : decodeURIComponent(slug)},
@@ -55,7 +58,7 @@ const Layout = async ({children, params : {slug}}: {children : React.ReactNode, 
                 <div className="px-6 py-4">
                     <p className="font-semibold py-3">About {" - "} r/{decodeURIComponent(slug)}</p>
                 </div>
-                <dl className="divide-y divide-gray-200 px-6 py-4 text-sm leading-6 bg-white">
+                <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
                   <div className="flex justify-between gap-x-4 py-3">
                      <dt className="text-gray-500">Created</dt>
                      <dd className="text-gray-700">
@@ -71,12 +74,25 @@ const Layout = async ({children, params : {slug}}: {children : React.ReactNode, 
                      </dd>
                   </div>
 
-                  { subreddit.creatorId === session.user.id ? (
+                  { subreddit.creatorId === session?.user.id ? (
                     <div className="flex justify-between gap-x-4 py-3">
                       <p className="text-gray-500">You created this community</p>
                     </div>
                   ) : null}
+
+                  {
+                    subreddit.creatorId !== session?.user.id ? (
+                      <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} isSubscribed={isSubscribed} />
+                    ) : null
+                  }
+                  
+                  <div className="pt-2 mb-4">
+                     <Link href={`/r/${slug}/submit`} className={buttonVariants({variant : 'outline', className:"w-full bg-gray-50"})}>Create Post</Link>
+
+                  </div>
+                  
                 </dl>
+
             </div>
          </div>
       </div>
